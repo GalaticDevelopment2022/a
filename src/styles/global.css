@@ -106,7 +106,7 @@ h1 {
     left: 57px;
 }
 
-.card-back div {
+.card-cvc {
     font-size: 0.6875rem;
     color: var(--white);
     position: absolute;
@@ -173,16 +173,21 @@ h1 {
 .form-date-cvc,
 .form-date-group {
     display: flex;
-    margin-left: -5px;
-    margin-right: -5px;
 }
 
-.form-date-cvc .form-group,
-.form-date-group div {
+.form-date-cvc .form-group {
     flex: 1 0 50%;
     max-width: 50%;
-    padding-left: 5px;
-    padding-right: 5px;
+}
+
+.form-month,
+.form-year {
+    width: 72px;
+    height: 45px;
+}
+
+.form-month {
+    margin-right: 0.5rem;
 }
 
 .btn {
@@ -208,4 +213,77 @@ h1 {
 
 .hidden {
     display: none;
+}
+
+@media (min-width: 1200px) {
+    .wrapper {
+        display: flex;
+        height: 900px;
+    }
+
+    .card-wrapper {
+        flex: 33.33%;
+        max-width: 33.33%;
+        min-height: 100vh;
+        background-image: url('/bg-main-desktop.png');
+        background-size: cover;
+        padding: 0;
+    }
+
+    .card-group {
+        max-width: none;
+    }
+
+    .card {
+        width: 447px;
+        height: 245px;
+    }
+
+    .card-front {
+        top: 187px;
+        left: auto;
+        right: -27%;
+    }
+
+    .card-back {
+        top: 468px;
+        left: auto;
+        right: -47%;
+    }
+
+    .card-cvc {
+        font-size: 0.875rem;
+        top: 112px;
+        right: 56px;
+        letter-spacing: 0.15em;
+    }
+
+    .form-wrapper {
+        flex: 66.66%;
+        max-width: 66.66%;
+        display: flex;
+        align-items: center;
+        padding: 0 0 0 8.5%;
+    }
+
+    .form {
+        max-width: 380px;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-month,
+    .form-year {
+        width: 80px;
+    }
+
+    .form-month {
+        margin-right: 0.625rem;
+    }
+
+    .btn {
+        margin-top: 1rem;
+    }
 }

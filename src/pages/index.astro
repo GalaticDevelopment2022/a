@@ -4,7 +4,7 @@ import Card from '../components/Card.astro';
 ---
 
 <Layout title="Frontend Mentor | Interactive card details form">
-	<main>
+	<main class="wrapper">
 		<div class="card-wrapper">
 			<div class="card-group">
 				<div class="card card-front">
@@ -20,7 +20,7 @@ import Card from '../components/Card.astro';
 				</div>
 
 				<div class="card card-back">
-					<div>000</div>
+					<div class="card-cvc">000</div>
 				</div>
 			</div>
 		</div>
@@ -42,13 +42,8 @@ import Card from '../components/Card.astro';
 						<label for="date" class="form-label">Exp. Date (MM/YY)</label>
 						
 						<div class="form-date-group">
-							<div>
-								<input type="text" placeholder="MM" class="form-control">
-							</div>
-
-							<div>
-								<input type="text" placeholder="YY" class="form-control">
-							</div>
+							<input type="text" placeholder="MM" class="form-control form-month">
+							<input type="text" placeholder="YY" class="form-control form-year">
 						</div>
 					</div>
 
@@ -69,8 +64,8 @@ import Card from '../components/Card.astro';
 		</div>
 
 		<div class="attribution hidden">
-		Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-		Coded by <a href="#">Byron</a>.
+			Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+			Coded by <a href="#">Byron</a>.
 		</div>
 	</main>
 </Layout>
