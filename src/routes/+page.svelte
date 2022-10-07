@@ -1,13 +1,31 @@
 <script>
     import '../styles/global.css';
+    import { fly } from 'svelte/transition';
     import { fade } from 'svelte/transition';
     
-    import { name, number, month, year, cvc } from '../store.js';
+    import { name, month, year, cvc } from '../store.js';
+
+    let cardName = '';
+    let cardNumber = '';
+    let cardMonth = '';
+    let cardYear = '';
+    let cardCvv = '';
+    let cardNumberMask = '0000 0000 0000 0000';
+    let refs = {};
 
     let form = { submitted: false };
 
     function handleSubmit() {
         form.submitted = true;
+    }
+
+    $: {
+        for (let i = 0; i < cardNumber.length; i++) {
+            if (cardNumberMask[i] == ' ' && cardNumber[i] !== ' ') cardNumber = cardNumber.substr(0, i) + ' ' + cardNumber.substr(i, cardNumber.length - i)
+        }
+
+        if (cardNumber.substr('-1') == ' ') cardNumber = cardNumber.substr(0, cardNumber.length - 1)
+            cardNumber = cardNumber.substr(0, cardNumberMask.length).replace(/[^0-9 ]/g, '')
     }
 </script>
 
@@ -18,10 +36,32 @@
                 <img src="/card-logo.svg" alt="" class="card-logo">
 
                 <div class="card-number">
-                    {$number || '0000000000000000'}
+                    {#each cardNumberMask as n, i (i)}
+                        <div class="card-number-item" class:active={n.trim() === ''}>
+                            {#if cardNumber.length > i}
+                                <span in:fly={{y:-10}} out:fly={{y:10}}>
+                                    {cardNumber[i]}
+                                </span>
+                            {:else}
+                                <span in:fly={{y:-10}} out:fly={{y:10}}>{n}</span>
+                            {/if}
+                        </div>
+                    {/each}
                 </div>
 
-                <div class="card-name">{$name || 'Jane'}</div>
+                <div class="card-name">
+                    {#if cardName.length}
+                        <div class="card-name-item">
+                            {#each cardName.replace(/\s\s+/g, ' ') as n, i (i + 1)}
+                                {#if i == i}
+                                    <span in:fly={{y:-6}}>{n}</span>
+                                {/if}
+                            {/each}
+                        </div>
+                    {:else}
+                        <div in:fly={{y:-6}} class="card-item__name placeholder">Jane Appleseed</div>
+                    {/if}
+                </div>
 
                 <div class="card-date">{$month || '00'}/{$year || '00'}</div>
             </div>
@@ -37,12 +77,12 @@
             <form action="" class="form" on:submit|preventDefault={handleSubmit}>
                 <div class="form-group">
                     <label for="name" class="form-label">Cardholder Name</label>
-                    <input type="text" placeholder="e.g. Jane Appleseed" class="form-control" bind:value={$name} maxlength="30">
+                    <input type="text" id="cardName" class="form-control" placeholder="e.g. Jane Appleseed" bind:value={cardName} autocomplete="off" maxlength="30">
                 </div>
 
                 <div class="form-group">
                     <label for="number" class="form-label">Card Number</label>
-                    <input type="text" placeholder="e.g. 1234 5678 9123 0000" class="form-control" bind:value={$number} maxlength="16">
+                    <input type="text" id="cardNumber" class="form-control" placeholder="e.g. 1234 5678 9123 0000" bind:value={cardNumber} autocomplete="off">
                 </div>
 
                 <div class="form-date-cvc">

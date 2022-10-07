@@ -82,6 +82,20 @@ h1 {
     letter-spacing: 0.125em;
 }
 
+.card-number-item {
+    width: 1.25rem;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.card-number-item span {
+    position: absolute;
+}
+
+.card-number-item.active {
+    width: 1rem;
+}
+
 .card-name,
 .card-date {
     font-size: 0.625rem;
