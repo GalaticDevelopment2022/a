@@ -4,29 +4,82 @@
     import { fade } from 'svelte/transition';
     
     import { name, month, year, cvc } from '../store.js';
-
+    
     let cardName = '';
     let cardNumber = '';
     let cardMonth = '';
     let cardYear = '';
     let cardCvv = '';
+
     let cardNumberMask = '0000 0000 0000 0000';
     let refs = {};
 
     let form = { submitted: false };
+    let errors = {};
 
-    function handleSubmit() {
-        form.submitted = true;
+    function handleSubmit(e) {
+        validate();
+
+        // form.submitted = true;
+    }
+
+    function setError(field, message) {
+
+    }
+
+    function validate() {
+        const name = document.getElementById('cardName');
+        const number = document.getElementById('cardNumber');
+        const month = document.getElementById('cardMonth');
+        const year = document.getElementById('cardYear');
+        const cvc = document.getElementById('cardCvc');
+
+        console.log([name, number, month, year, cvc]);
+
+        if (name.value.trim() === '') {
+            errors.name = "Can't be blank";
+        } else {
+            errors.name = '';
+        }
+
+        if (number.value.trim() === '') {
+            errors.number = "Can't be blank";
+        } else if (!number.value.trim().match('/[^0-9 ]/g')) {
+            errors.number = 'Wrong format, numbers only';
+        } else {
+            errors.number = '';
+        }
+
+        if (month.value.trim() === '' || year.value.trim() === '') {
+            errors.date = "Can't be blank";
+        } else if (month.value.trim().length < 2 || year.value.trim().length < 2) {
+            errors.date = 'Cant be less than two';
+        } else if (!month.value.trim().match('/^\d+$/') || !year.value.trim().match('/^\d+$/')) {
+            errors.date = 'Numbers only';
+        } else {
+            errors.date = '';
+        }
+
+        if (cvc.value.trim() === '') {
+            errors.cvc = "Can't be blank";
+        } else if (cvc.value.trim().length < 3) {
+            errors.cvc = 'Cant be less than three';
+        } else if (!cvc.value.trim().match('/^\d+$/')) {
+            errors.cvc = 'Numbers only';
+        } else {
+            errors.cvc = '';
+        }
     }
 
     $: {
         for (let i = 0; i < cardNumber.length; i++) {
-            if (cardNumberMask[i] == ' ' && cardNumber[i] !== ' ') cardNumber = cardNumber.substr(0, i) + ' ' + cardNumber.substr(i, cardNumber.length - i)
+            if (cardNumberMask[i] == ' ' && cardNumber[i] !== ' ') {
+                cardNumber = cardNumber.substr(0, i) + ' ' + cardNumber.substr(i, cardNumber.length - i)
+            }
         }
-
-        if (cardNumber.substr('-1') == ' ') cardNumber = cardNumber.substr(0, cardNumber.length - 1)
-            cardNumber = cardNumber.substr(0, cardNumberMask.length).replace(/[^0-9 ]/g, '')
     }
+
+
 </script>
 
 <main class="wrapper">
@@ -76,28 +129,42 @@
         {#if !form.submitted}
             <form action="" class="form" on:submit|preventDefault={handleSubmit}>
                 <div class="form-group">
-                    <label for="name" class="form-label">Cardholder Name</label>
+                    <label for="cardName" class="form-label">Cardholder Name</label>
                     <input type="text" id="cardName" class="form-control" placeholder="e.g. Jane Appleseed" bind:value={cardName} autocomplete="off" maxlength="30">
+                    {#if errors.name}
+                        <span>{errors.name}</span>
+                    {/if}
                 </div>
 
                 <div class="form-group">
-                    <label for="number" class="form-label">Card Number</label>
-                    <input type="text" id="cardNumber" class="form-control" placeholder="e.g. 1234 5678 9123 0000" bind:value={cardNumber} autocomplete="off">
+                    <label for="cardNumber" class="form-label">Card Number</label>
+                    <input type="text" id="cardNumber" class="form-control form-card-number" placeholder="e.g. 1234 5678 9123 0000" bind:value={cardNumber} autocomplete="off" maxlength="19">
+                    {#if errors.number}
+                        <span>{errors.number}</span>
+                    {/if}
                 </div>
 
                 <div class="form-date-cvc">
                     <div class="form-group">
-                        <label for="date" class="form-label">Exp. Date (MM/YY)</label>
+                        <label for="cardMonth" class="form-label">Exp. Date (MM/YY)</label>
                         
                         <div class="form-date-group">
-                            <input type="text" placeholder="MM" class="form-control form-month" bind:value={$month} maxlength="2">
-                            <input type="text" placeholder="YY" class="form-control form-year" bind:value={$year} maxlength="2">
+                            <input type="text" id="cardMonth" placeholder="MM" class="form-control form-month" bind:value={$month} maxlength="2">
+                            <input type="text" id="cardYear" placeholder="YY" class="form-control form-year" bind:value={$year} maxlength="2">
                         </div>
+
+                        {#if errors.date}
+                            <span>{errors.date}</span>
+                        {/if}
                     </div>
 
                     <div class="form-group">
-                        <label for="cvc" class="form-label">CVC</label>
-                        <input type="text" placeholder="e.g. 123" class="form-control" bind:value={$cvc} maxlength="3">
+                        <label for="cardCvc" class="form-label">CVC</label>
+                        <input type="text" id="cardCvc" placeholder="e.g. 123" class="form-control" bind:value={$cvc} maxlength="3">
+
+                        {#if errors.cvc}
+                            <span>{errors.cvc}</span>
+                        {/if}
                     </div>
                 </div>
 

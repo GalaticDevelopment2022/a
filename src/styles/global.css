@@ -80,6 +80,7 @@ h1 {
     top: 86px;
     left: 1.25rem;
     letter-spacing: 0.125em;
+    text-transform: uppercase;
 }
 
 .card-number-item {
@@ -182,6 +183,10 @@ h1 {
 .form-control::placeholder {
     color: var(--dark-grayish-violet);
     opacity: 0.4;
+}
+
+.form-card-number {
+    text-transform: uppercase;
 }
 
 .form-date-cvc,
