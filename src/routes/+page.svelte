@@ -42,10 +42,15 @@
             errors.name = '';
         }
 
-        if (number.value.trim() === '') {
+        const regex = /^[0-9]*$/;
+        const n = number.value.trim().replace(/\s/g, '');
+
+        if (n === '') {
             errors.number = "Can't be blank";
-        } else if (!number.value.trim().match('/[^0-9 ]/g')) {
+        } else if (!regex.test(n)) {
             errors.number = 'Wrong format, numbers only';
+        } else if (n.length !== 16) {
+            errors.number = 'invalid';
         } else {
             errors.number = '';
         }
@@ -54,7 +59,7 @@
             errors.date = "Can't be blank";
         } else if (month.value.trim().length < 2 || year.value.trim().length < 2) {
             errors.date = 'Cant be less than two';
-        } else if (!month.value.trim().match('/^\d+$/') || !year.value.trim().match('/^\d+$/')) {
+        } else if (!regex.test(month.value.trim()) || !regex.test(year.value.trim())) {
             errors.date = 'Numbers only';
         } else {
             errors.date = '';
@@ -64,7 +69,7 @@
             errors.cvc = "Can't be blank";
         } else if (cvc.value.trim().length < 3) {
             errors.cvc = 'Cant be less than three';
-        } else if (!cvc.value.trim().match('/^\d+$/')) {
+        } else if (!regex.test(cvc.value.trim())) {
             errors.cvc = 'Numbers only';
         } else {
             errors.cvc = '';
