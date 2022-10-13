@@ -214,6 +214,6 @@
 
     <div class="attribution hidden">
         Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-        Coded by <a href="#">Byron</a>.
+        Coded by <a href="https://twitter.com/bwalkermills">Byron</a>.
     </div>
 </main>
