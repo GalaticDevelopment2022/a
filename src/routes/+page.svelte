@@ -156,7 +156,7 @@
 
     <div class="form-wrapper">
         {#if !form.submitted}
-            <form action="" class="form" on:submit|preventDefault={handleSubmit}>
+            <form class="form" on:submit|preventDefault={handleSubmit}>
                 <div class="form-group" class:invalid-field={errors.name}>
                     <label for="cardName" class="form-label">Cardholder Name</label>
                     <input type="text" id="cardName" class="form-control" placeholder="e.g. Jane Appleseed" bind:value={cardName} autocomplete="off" maxlength="30">
