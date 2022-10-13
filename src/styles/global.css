@@ -63,6 +63,8 @@ h1 {
     top: 94px;
     left: 0;
     z-index: 10;
+    border-radius: 0.375rem;
+    box-shadow: 0 0 10rem -1rem rgb(0 0 0 / 40%);
 }
 
 .card-logo {
@@ -119,6 +121,7 @@ h1 {
     position: absolute;
     top: 0;
     left: 57px;
+    border-radius: 0.375rem;
 }
 
 .card-cvc {
@@ -220,6 +223,7 @@ h1 {
     text-align: center;
     width: 100%;
     margin-top: 0.625rem;
+    text-decoration: none;
     cursor: pointer;
     transition: transform 0.3s ease 0s, box-shadow 0.3s ease 0s;
 }
@@ -230,8 +234,55 @@ h1 {
     transform: scale(1.015);
 }
 
+.invalid-field .form-control {
+    border-color: indianred;
+}
+
+.invalid-feedback {
+    font-size: 0.75rem;
+    display: inline-block;
+    color: indianred;
+    margin-top: 0.5rem;
+}
+
+.thank-you {
+    text-align: center;
+}
+
+.thank-you img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 0 2.125rem;
+}
+
+.thank-you h2 {
+    font-size: 1.75rem;
+    text-transform: uppercase;
+    margin: 0 0 1.25rem;
+    letter-spacing: 0.125em;
+}
+
+.thank-you p {
+    font-size: 1.125rem;
+    margin: 0 0 2.5rem;
+    color: var(--dark-grayish-violet);
+}
+
 .hidden {
     display: none;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
 }
 
 @media (min-width: 1200px) {
@@ -255,11 +306,12 @@ h1 {
         content: '';
         background: url('/bg-main-mobile.png') no-repeat center var(--very-dark-violet);
         background-size: cover;
-        position: absolute;
+        position: fixed;
         top: 0;
-        right: 66.66%;
+        right: 66.4%;
         bottom: 0;
         left: 0;
+        height: 100vh;
     }
 
     .card-group {
@@ -274,7 +326,9 @@ h1 {
     .card-front {
         top: 187px;
         left: auto;
-        right: -27%;
+        right: -27.5%;
+        border-radius: 0.625rem;
+        box-shadow: 3rem 4rem 8rem -4.5rem rgb(0 0 0 / 40%);
     }
 
     .card-logo {
@@ -316,6 +370,8 @@ h1 {
         top: 468px;
         left: auto;
         right: -47%;
+        border-radius: 0.625rem;
+        box-shadow: 3rem 4rem 8rem -4.5rem rgb(0 0 0 / 40%);
     }
 
     .card-cvc {
@@ -334,7 +390,7 @@ h1 {
     }
 
     .form {
-        max-width: 380px;
+        min-width: 380px;
     }
 
     .form-group {
@@ -352,5 +408,13 @@ h1 {
 
     .btn {
         margin-top: 1rem;
+    }
+
+    .thank-you p {
+        margin-bottom: 2rem;
+    }
+
+    .thank-you .btn {
+        width: 100%;
     }
 }
